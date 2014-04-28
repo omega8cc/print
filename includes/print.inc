@@ -25,6 +25,12 @@ function _print_scan_libs($lib, $mask) {
     $tools = array_merge($tools, array_keys(file_scan_directory(libraries_get_path($lib), $mask)));
   }
 
+  // See if there is a binary version of wkhtmltopdf available.
+  exec('which wkhtmltopdf', $binary_output, $binary_status);
+  if (count($binary_output) > 0 && $binary_status == 0) {
+    $tools[] = $binary_output[0];
+  }
+
   return array_unique($tools);
 }
 
