@@ -294,6 +294,11 @@ function _print_pdf_tools() {
     $tools = array_merge($tools, array_keys(file_scan_directory(libraries_get_path('wkhtmltopdf'), '^wkhtmltopdf')));
   }
 
+  // See if there is a binary version of wkhtmltopdf available.
+  exec('which wkhtmltopdf', $binary_output, $binary_status);
+  if (count($binary_output) > 0 && $binary_status == 0) {
+    $tools[] = $binary_output[0];
+  }
 
   $num_tools = count($tools);
 
